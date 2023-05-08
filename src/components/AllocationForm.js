@@ -3,30 +3,35 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const AllocationForm = (props) => {
-    const { dispatch, remaining } = useContext(AppContext);
+    const { dispatch, remaining, expenses } = useContext(AppContext);
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [action, setAction] = useState('');
 
     const submitEvent = () => {
-
-        if (cost > remaining) {
-            alert("The value cannot exceed remaining funds  £" + remaining);
-            setCost("");
-            return;
-        }
-
         const expense = {
             name: name,
             cost: parseInt(cost),
         };
         if (action === "Reduce") {
+            expenses.map((x) => {
+                //console.log(x.name + '---' + name)
+                if (x.name === name && x.cost < expense.cost) {
+                    alert("The value cannot be reduced more than  £" + x.cost);
+                }
+                return x;
+            })
             dispatch({
                 type: 'RED_EXPENSE',
                 payload: expense,
             });
         } else {
+            if (cost > remaining) {
+                alert("The value cannot exceed remaining funds  £" + remaining);
+                setCost("");
+                return;
+            }
             dispatch({
                 type: 'ADD_EXPENSE',
                 payload: expense,
@@ -47,8 +52,8 @@ const AllocationForm = (props) => {
                         <option value="Marketing" name="marketing"> Marketing</option>
                         <option value="Sales" name="sales">Sales</option>
                         <option value="Finance" name="finance">Finance</option>
-                        <option value="HR" name="hr">HR</option>
-                        <option value="IT" name="it">IT</option>
+                        <option value="Human Resource" name="Human Resource">Human Resource</option>
+                        <option value="IT" name="IT">IT</option>
                         <option value="Admin" name="admin">Admin</option>
                     </select>
 
