@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import ExpenseItem from "./ExpenseItem";
+import '../App.css';
 
 const ExpenseList = () => {
     const {expenses} = useContext(AppContext)
@@ -11,8 +12,9 @@ const ExpenseList = () => {
                 <tr>
                     <th scope="col">Department</th>
                     <th scope="col">Allocated Budget</th>
-                    <th scope="col">Increase by 10</th>
-                    <th scope="col">Delete</th>
+                    <th className="centered" scope="col">Increase by 10</th>
+                    <th className="centered" scope="col">Decrease by 10</th>
+                    <th className="centered" scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
